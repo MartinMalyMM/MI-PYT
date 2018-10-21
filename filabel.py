@@ -381,29 +381,29 @@ def index(reposlug=False, sdeleni=False):
     for labelset in labels:
          labels_rule = "File(s) with path(s) " + str(labelset[1])[1:-1] + " should have label " + labelset[0] + ". "
          labels_rules = "".join([labels_rules, labels_rule])
-    r = session.get('https://api.github.com/user/repos')
+    #r = session.get('https://api.github.com/user/repos')
     
     # Find repos in configuration files
-    repos = find_repos_W(overall_parser)
-    if not repos:
-        success = False
-        overall_parser = "Any repository was not found in any configuration file(s)! Set the repositories in the file in the section [github], option repos = ..."    
-    repos_checked = str(repos)[1:-1]
+    #repos = find_repos_W(overall_parser)
+    #if not repos:
+    #    success = False
+    #    overall_parser = "Any repository was not found in any configuration file(s)! Set the repositories in the file in the section [github], option repos = ..."    
+    #repos_checked = str(repos)[1:-1]
     
-    for rep in repos:
-        reposlug = "/".join([username,rep])
+    #for rep in repos:
+    #    reposlug = "/".join([username,rep])
         # Find PRs in repository
-        pulls = find_pulls(session, reposlug, False, False)
-        sdeleni = str(pulls)
-        if not pulls:
-            results = "chyba"
-            continue
-        results = "ok"
+    #    pulls = find_pulls(session, reposlug, False, False)
+    #    sdeleni = str(pulls)
+    #    if not pulls:
+    #        results = "chyba"
+    #        continue
+    #    results = "ok"
         
     #sdeleni = str(r.json()[0]['name'])    
     
     if success:
-        return render_template('filabel.html', reposlug=reposlug, username=username, labels_rules=labels_rules, repos_checked=repos_checked, results = results, sdeleni=sdeleni)
+        return render_template('filabel.html', reposlug=reposlug, username=username, labels_rules=labels_rules, sdeleni=sdeleni)
     else:
         return render_template('error.html', error_message=overall_parser)
 
