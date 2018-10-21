@@ -356,8 +356,7 @@ def find_repos_W(overall_parser):
     # Check if the shell constant variable $FILABEL_CONFIG is set
     #success, config_const = config_W()
 
-@app.route('/')
-@app.route('/<path:reposlug>')
+@app.route('/',methods=['POST'])
 def index(reposlug=False, sdeleni=False):
     # Check if the shell constant variable $FILABEL_CONFIG is set and configuration is usable
     success, overall_parser = config_W()
@@ -407,7 +406,7 @@ def index(reposlug=False, sdeleni=False):
     #sdeleni = str(r.json()[0]['name'])    
     
     if success:
-        return render_template('filabel.html', reposlug=reposlug, username=username, labels_rules=labels_rules, sdeleni=sdeleni)
+        return render_template('filabel.html', username=username, labels_rules=labels_rules, sdeleni=sdeleni)
     else:
         return render_template('error.html', error_message=overall_parser)
 

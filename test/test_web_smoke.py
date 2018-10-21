@@ -84,4 +84,4 @@ def test_bad_secret():
         rv = app.post('/', json=PING, headers={
             'X-Hub-Signature': 'sha1=1cacacc4207bdd4a51a7528bd9a5b9d6546b0c22',
             'X-GitHub-Event': 'ping'})
-assert rv.status_code >= 400
+        assert rv.status_code >= 400
