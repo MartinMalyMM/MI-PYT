@@ -12,8 +12,9 @@ def index():
     
 @app.template_filter('camel')    
 def camel_case_filter(txt):
-    txt = ''.join(t.title() for t in txt.split('_')) 
-    #return jinja2.Markup <i>   
+    txt = "".join(t.title() for t in txt.split('_')) 
+    result = "<i>" + txt + "</i>"
+    return jinja2.Markup(result)   
 
 @app.route('/hello')
 @app.route('/hello/<name>')

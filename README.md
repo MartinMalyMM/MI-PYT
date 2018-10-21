@@ -1,5 +1,3 @@
 # MI-PYT
 
-This line was added by second commit.
-
-This line was added by third commit (on GitHub web)
+Repository with programes developed for the subject MI-PYT
