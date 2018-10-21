@@ -380,7 +380,7 @@ def index(reposlug=False, sdeleni=False):
          #labels_rule = "File(s) with path(s) " + str(labelset[1])[1:-1] + " should have label " + labelset[0] + ". "
          #labels_rules = "".join([labels_rules, labels_rule])
     success = False
-    overall_parser = overall_parser['token']
+    overall_parser = str(dict(overall_parser.items('github')))
     
     
     
