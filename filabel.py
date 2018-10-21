@@ -364,22 +364,22 @@ def index(reposlug=False, sdeleni=False):
     # Check if tokes is usable
     session = requests.Session()
     session.headers = {'User-Agent': 'Python'}
-    #def token_auth(req): # Why it is placed here?
-        #req.headers['Authorization'] = f'token {overall_parser["github"]["token"]}'
-        #return req
-    #session.auth = token_auth
-    #r = session.get('https://api.github.com/user')
-    #if not "200" in str(r.status_code): #200
-        #success = False
-        #overall_parser = "Auth configuration not usable!"
+    def token_auth(req): # Why it is placed here?
+        req.headers['Authorization'] = f'token {overall_parser["github"]["token"]}'
+        return req
+    session.auth = token_auth
+    r = session.get('https://api.github.com/user')
+    if not "200" in str(r.status_code): #200
+        success = False
+        overall_parser = "Auth configuration not usable!"
 
-    #username = r.json()['login']
-    #labels = find_labels(overall_parser)
-    #labels_rules = ""
-    #for labelset in labels:
-         #labels_rule = "File(s) with path(s) " + str(labelset[1])[1:-1] + " should have label " + labelset[0] + ". "
-         #labels_rules = "".join([labels_rules, labels_rule])
-    success = False
+    username = r.json()['login']
+    labels = find_labels(overall_parser)
+    labels_rules = ""
+    for labelset in labels:
+         labels_rule = "File(s) with path(s) " + str(labelset[1])[1:-1] + " should have label " + labelset[0] + ". "
+         labels_rules = "".join([labels_rules, labels_rule])
+    #success = False
     #overall_parser = str(dict(overall_parser.items('github')))
     
     
