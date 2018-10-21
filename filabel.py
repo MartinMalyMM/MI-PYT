@@ -380,7 +380,7 @@ def index(reposlug=False, sdeleni=False):
          #labels_rule = "File(s) with path(s) " + str(labelset[1])[1:-1] + " should have label " + labelset[0] + ". "
          #labels_rules = "".join([labels_rules, labels_rule])
     success = False
-    config_parser = "Test"
+    overall_parser = overall_parser['token']
     
     
     
