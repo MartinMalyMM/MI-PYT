@@ -390,7 +390,7 @@ def index(reposlug=False, sdeleni=False):
          
     if request.method == 'POST':
         #signature = request.headers.get('X-Hub-Signature')
-        data = json.loads(request.data)
+        #data = json.loads(request.data)
         #secret = overall_parser["github"]["secret"]
         #if verify_hmac_hash(data, signature,secret):
         #with open("file_pull.txt","w") as f:
@@ -401,6 +401,7 @@ def index(reposlug=False, sdeleni=False):
                 #    f.write(str(request.data))
                 return jsonify({'msg': 'Ok'})
             if request.headers.get('X-GitHub-Event') == "pull_request":
+                data = json.loads(request.data)
                 reposlug = data['pull_request']['repository']['fullname']
                 #with open("file_pull.txt","w") as f:
                 #    f.write(reposlug)                
