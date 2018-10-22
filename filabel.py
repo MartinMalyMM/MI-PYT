@@ -401,7 +401,6 @@ def index(reposlug=False, sdeleni=False):
             if request.headers.get('X-GitHub-Event') == "pull_request":
                 #with open("file_pull.txt","w") as f:
                 #    f.write(str(request.data))
-                return jsonify({'msg': 'Ok'})
                 reposlug = data['repository']['fullname']
                 # Find PRs in repository
                 pulls = find_pulls(session, reposlug, base=False, state=False)
@@ -461,7 +460,8 @@ def index(reposlug=False, sdeleni=False):
                                     break
                             if pull_error:
                                 #click.echo('{}'.format(pr) + " https://github.com/" + reposlug + "/pull/" + str(pull) + " - " + fail)
-                                continue                                                
+                                continue 
+                return jsonify({'msg': 'Ok'})
         else:
             abort(405)
     
