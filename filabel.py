@@ -401,7 +401,8 @@ def index(reposlug=False, sdeleni=False):
                 #    f.write(str(request.data))
                 return jsonify({'msg': 'Ok'})
             if request.headers.get('X-GitHub-Event') == "pull_request":
-                data = json.loads(request.data)
+                #data = json.loads(request.data)
+                data = request.data
                 reposlug = data['pull_request']['repository']['fullname']
                 #with open("file_pull.txt","w") as f:
                 #    f.write(reposlug)                
