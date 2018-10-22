@@ -389,12 +389,17 @@ def index(reposlug=False, sdeleni=False):
          labels_rules = "".join([labels_rules, labels_rule])
          
     if request.method == 'POST':
-        with open("file.txt","w") as f:
-            f.write(str(request.data))
-        signature = request.headers.get('X-Hub-Signature')
+        #signature = request.headers.get('X-Hub-Signature')
         data = request.data
-        if verify_hmac_hash(data, signature):
+        #if verify_hmac_hash(data, signature):
+        if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
+                with open("file_ping.txt","w") as f:
+                    f.write(str(request.data))
+                return jsonify({'msg': 'Ok'})
+            if request.headers.get('X-GitHub-Event') == "pull_request":
+                with open("file_pull.txt","w") as f:
+                    f.write(str(request.data))
                 return jsonify({'msg': 'Ok'})
         else:
             abort(405)
