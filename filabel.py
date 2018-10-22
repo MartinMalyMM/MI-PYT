@@ -3,11 +3,14 @@ import configparser
 import requests
 import fnmatch
 import sys
-from flask import Flask, request
+from flask import Flask, request, jsonify, abort
 app = Flask(__name__)
 from flask import render_template
 import jinja2
 import os
+import hmac
+import hashlib
+import json
 
 #Usage: filabel.py [OPTIONS] [REPOSLUGS]...
 #
@@ -351,6 +354,12 @@ def find_repos_W(overall_parser):
     print_debug(repos)   
     return repos
             
+
+#Compare the HMAC hash signature
+def verify_hmac_hash(data, signature):
+    GitHub_secret = bytes('uplnemochroznetajneheslo', 'UTF-8')
+    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
+    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
     
 #def main_W():
     # Check if the shell constant variable $FILABEL_CONFIG is set
@@ -382,6 +391,13 @@ def index(reposlug=False, sdeleni=False):
     if request.method == 'POST':
         with open("file.txt","w") as f:
             f.write(str(request.data))
+        signature = request.headers.get('X-Hub-Signature')
+        data = request.data
+        if verify_hmac_hash(data, signature):
+            if request.headers.get('X-GitHub-Event') == "ping":
+                return jsonify({'msg': 'Ok'})
+        else:
+            abort(405)
     #success = False
     #overall_parser = str(dict(overall_parser.items('github')))
     
