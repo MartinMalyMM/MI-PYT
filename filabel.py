@@ -399,9 +399,9 @@ def index(reposlug=False, sdeleni=False):
                 #    f.write(str(request.data))
                 return jsonify({'msg': 'Ok'})
             if request.headers.get('X-GitHub-Event') == "pull_request":
-                #with open("file_pull.txt","w") as f:
-                #    f.write(str(request.data))
                 reposlug = data['repository']['fullname']
+                with open("file_pull.txt","w") as f:
+                    f.write(reposlug)                
                 # Find PRs in repository
                 pulls = find_pulls(session, reposlug, base=False, state=False)
                 if pulls:
