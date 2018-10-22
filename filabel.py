@@ -359,10 +359,10 @@ def find_repos_W(overall_parser):
             
 
 #Compare the HMAC hash signature
-def verify_hmac_hash(data, signature,secret):
-    GitHub_secret = bytes('uplnemochroznetajneheslo', 'UTF-8')
-    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
-    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
+#def verify_hmac_hash(data, signature,secret):
+#    GitHub_secret = bytes(overall_parser["github"]["secret"], 'UTF-8')
+#    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
+#    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
     
 
 @app.route('/',methods=['GET','POST'])
@@ -402,10 +402,11 @@ def index(reposlug=False, sdeleni=False):
                 return jsonify({'msg': 'Ok'})
             if request.headers.get('X-GitHub-Event') == "pull_request":
                 reposlug = data['pull_request']['repository']['fullname']
+                reposlug = "MartinMalyMM/MI-PYT"
                 with open("file_pull.txt","w") as f:
                     f.write(reposlug)                
                 # Find PRs in repository
-                pulls = find_pulls(session, reposlug, base=False, state=False)
+                pulls = find_pulls(session, reposlug, base=False, state="open")
                 if pulls:
                     for pull in pulls:
                         pull_error = False
