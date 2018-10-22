@@ -3,7 +3,7 @@ import configparser
 import requests
 import fnmatch
 import sys
-from flask import Flask
+from flask import Flask, request
 app = Flask(__name__)
 from flask import render_template
 import jinja2
@@ -356,7 +356,7 @@ def find_repos_W(overall_parser):
     # Check if the shell constant variable $FILABEL_CONFIG is set
     #success, config_const = config_W()
 
-@app.route('/',methods=['POST'])
+@app.route('/',methods=['GET','POST'])
 def index(reposlug=False, sdeleni=False):
     # Check if the shell constant variable $FILABEL_CONFIG is set and configuration is usable
     success, overall_parser = config_W()
@@ -378,6 +378,10 @@ def index(reposlug=False, sdeleni=False):
     for labelset in labels:
          labels_rule = "File(s) with path(s) " + str(labelset[1])[1:-1] + " should have label " + labelset[0] + ". "
          labels_rules = "".join([labels_rules, labels_rule])
+         
+    if request.method == 'POST':
+        with open("file.txt","w") as f:
+            f.write(str(request.data))
     #success = False
     #overall_parser = str(dict(overall_parser.items('github')))
     
