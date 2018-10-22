@@ -393,8 +393,6 @@ def index(reposlug=False, sdeleni=False):
         #data = json.loads(request.data)
         #secret = overall_parser["github"]["secret"]
         #if verify_hmac_hash(data, signature,secret):
-        #with open("file_pull.txt","w") as f:
-        #    f.write(data) 
         if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
                 #with open("file_ping.txt","w") as f:
@@ -403,9 +401,9 @@ def index(reposlug=False, sdeleni=False):
             if request.headers.get('X-GitHub-Event') == "pull_request":
                 #data = json.loads(request.data)
                 data = request.data
+                with open("file_pull.txt","w") as f:
+                    f.write(data)       
                 reposlug = data['pull_request']['repository']['fullname']
-                #with open("file_pull.txt","w") as f:
-                #    f.write(reposlug)                
                 # Find PRs in repository
                 pulls = find_pulls(session, reposlug, base=False, state="open")
                 if pulls:
