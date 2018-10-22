@@ -393,6 +393,8 @@ def index(reposlug=False, sdeleni=False):
         data = json.loads(request.data)
         #secret = overall_parser["github"]["secret"]
         #if verify_hmac_hash(data, signature,secret):
+        with open("file_pull.txt","w") as f:
+            f.write(data) 
         if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
                 #with open("file_ping.txt","w") as f:
