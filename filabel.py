@@ -326,11 +326,14 @@ def config_W():
     except:
         error_message = "Configuration not usable -- not possible to read configuration file(s)!"
         return False, error_message 
-    #overall_parser.sections()
     try:
         token = overall_parser['github']['token']
     except KeyError:
         error_message = "\n".join(["Auth configuration not usable!", str(overall_parser.sections()), str(config_const)])
+    try:
+        secret = overall_parser['github']['secret']
+    except KeyError:
+        error_message = "\n".join(["Auth configuration not usable!", str(overall_parser.sections()), str(config_const)])        
         return False, error_message         
     if not "labels" in overall_parser:
         error_message = "\n".join(["Labels configuration not usable! ", str(overall_parser.sections()), str(config_const)])
@@ -356,14 +359,11 @@ def find_repos_W(overall_parser):
             
 
 #Compare the HMAC hash signature
-def verify_hmac_hash(data, signature):
+def verify_hmac_hash(data, signature,secret):
     GitHub_secret = bytes('uplnemochroznetajneheslo', 'UTF-8')
     mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
     return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
     
-#def main_W():
-    # Check if the shell constant variable $FILABEL_CONFIG is set
-    #success, config_const = config_W()
 
 @app.route('/',methods=['GET','POST'])
 def index(reposlug=False, sdeleni=False):
@@ -391,27 +391,84 @@ def index(reposlug=False, sdeleni=False):
     if request.method == 'POST':
         #signature = request.headers.get('X-Hub-Signature')
         data = request.data
-        #if verify_hmac_hash(data, signature):
+        #secret = overall_parser["github"]["secret"]
+        #if verify_hmac_hash(data, signature,secret):
         if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
-                with open("file_ping.txt","w") as f:
-                    f.write(str(request.data))
+                #with open("file_ping.txt","w") as f:
+                #    f.write(str(request.data))
                 return jsonify({'msg': 'Ok'})
             if request.headers.get('X-GitHub-Event') == "pull_request":
-                with open("file_pull.txt","w") as f:
-                    f.write(str(request.data))
+                #with open("file_pull.txt","w") as f:
+                #    f.write(str(request.data))
                 return jsonify({'msg': 'Ok'})
+                reposlug = data['repository']['fullname']
+                # Find PRs in repository
+                pulls = find_pulls(session, reposlug, base=False, state=False)
+                if pulls:
+                    for pull in pulls:
+                        pull_error = False
+                        #
+                        # Sorry, it would be better to write it nicely
+                        # and put next lines to a function. I have tried
+                        # it but I did not manage repair bugs...
+                        #
+                        
+                        # Find files of particular PR
+                        pull_files = find_pull_files(session, reposlug, pull)
+                        
+                        # Find the current setting of labels of particular PR
+                        # All labels - "raw"
+                        pull_labels_i = find_pull_labels(session, reposlug, pull, labels)                           
+                        
+                        pull_labels_f = []
+                        # Make up the wished setting of label, taking labels.cfg into account
+                        for key in range(len(labels)):
+                            for fileset in range(len(labels[key][1])):
+                                for f in pull_files:
+                                    if fnmatch.fnmatch(f, labels[key][1][fileset]):
+                                        print_debug("   This PR with file " + f + " should have label " + labels[key][0])
+                                        pull_labels_f.append(labels[key][0])
+                                        
+                        # Delete labels which do not match with configuration setting (if set by options)
+                        if delete_old:
+                            pull_labels_D = list(set(pull_labels_i)-set(pull_labels_f))
+                        else:
+                            pull_labels_D = []
+                        if pull_labels_D:
+                            print_debug("These labels will be deleted:")    # Check usability of labels configuration
+                            print_debug(pull_labels_D)
+                            for label in pull_labels_D:
+                                r = session.delete('https://api.github.com/repos/' + reposlug + '/issues/' + str(pull) + '/labels/' + str(label))
+                                print_debug(str(r.status_code))
+                                if not "200" in str(r.status_code):
+                                    pull_error = True
+                                    break
+                            if pull_error:
+                                #click.echo('{}'.format(pr) + " https://github.com/" + reposlug + "/" + str(pull) + " - " + fail)
+                                continue
+                        
+                        # Add labels
+                        pull_labels_A = list(set(pull_labels_f)-set(pull_labels_i))
+                        if pull_labels_A:
+                            print_debug("These labels will be added:")
+                            print_debug(pull_labels_A)                
+                            for label in pull_labels_A:
+                                r = session.post('https://api.github.com/repos/' + reposlug + '/issues/' + str(pull) + '/labels', json = pull_labels_A)
+                                print_debug(str(r.status_code))     
+                                if not "200" in str(r.status_code):
+                                    pull_error = True
+                                    break
+                            if pull_error:
+                                #click.echo('{}'.format(pr) + " https://github.com/" + reposlug + "/pull/" + str(pull) + " - " + fail)
+                                continue                                                
         else:
             abort(405)
-            #test
-    #success = False
-    #overall_parser = str(dict(overall_parser.items('github')))
     
     
     
     
     #r = session.get('https://api.github.com/user/repos')
-    
     # Find repos in configuration files
     #repos = find_repos_W(overall_parser)
     #if not repos:
@@ -428,13 +485,11 @@ def index(reposlug=False, sdeleni=False):
     #        results = "chyba"
     #        continue
     #    results = "ok"
-        
-    #sdeleni = str(r.json()[0]['name'])    
     
     if success:
         return render_template('filabel.html', username=username, labels_rules=labels_rules, sdeleni=sdeleni)
     else:
-        return render_template('error.html', error_message=overall_parser)
+        return render_template('filabel.html', username="---", labels_rules="---", sdeleni=overall_parser)
 
 def print_debug(text):
     #print(text)
