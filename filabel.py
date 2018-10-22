@@ -403,6 +403,7 @@ def index(reposlug=False, sdeleni=False):
                 return jsonify({'msg': 'Ok'})
         else:
             abort(405)
+            #test
     #success = False
     #overall_parser = str(dict(overall_parser.items('github')))
     
