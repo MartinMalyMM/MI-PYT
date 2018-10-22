@@ -393,8 +393,8 @@ def index(reposlug=False, sdeleni=False):
         data = json.loads(request.data)
         #secret = overall_parser["github"]["secret"]
         #if verify_hmac_hash(data, signature,secret):
-        with open("file_pull.txt","w") as f:
-            f.write(data) 
+        #with open("file_pull.txt","w") as f:
+        #    f.write(data) 
         if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
                 #with open("file_ping.txt","w") as f:
@@ -402,9 +402,8 @@ def index(reposlug=False, sdeleni=False):
                 return jsonify({'msg': 'Ok'})
             if request.headers.get('X-GitHub-Event') == "pull_request":
                 reposlug = data['pull_request']['repository']['fullname']
-                reposlug = "MartinMalyMM/MI-PYT"
-                with open("file_pull.txt","w") as f:
-                    f.write(reposlug)                
+                #with open("file_pull.txt","w") as f:
+                #    f.write(reposlug)                
                 # Find PRs in repository
                 pulls = find_pulls(session, reposlug, base=False, state="open")
                 if pulls:
@@ -467,28 +466,6 @@ def index(reposlug=False, sdeleni=False):
                 return jsonify({'msg': 'Ok'})
         else:
             abort(405)
-    
-    
-    
-    
-    #r = session.get('https://api.github.com/user/repos')
-    # Find repos in configuration files
-    #repos = find_repos_W(overall_parser)
-    #if not repos:
-    #    success = False
-    #    overall_parser = "Any repository was not found in any configuration file(s)! Set the repositories in the file in the section [github], option repos = ..."    
-    #repos_checked = str(repos)[1:-1]
-    
-    #for rep in repos:
-    #    reposlug = "/".join([username,rep])
-        # Find PRs in repository
-    #    pulls = find_pulls(session, reposlug, False, False)
-    #    sdeleni = str(pulls)
-    #    if not pulls:
-    #        results = "chyba"
-    #        continue
-    #    results = "ok"
-    
     if success:
         return render_template('filabel.html', username=username, labels_rules=labels_rules, sdeleni=sdeleni)
     else:
