@@ -359,10 +359,10 @@ def find_repos_W(overall_parser):
             
 
 #Compare the HMAC hash signature
-def verify_hmac_hash(data, signature, secret):
-    GitHub_secret = bytes(secret, 'UTF-8')
-    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
-    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
+#def verify_hmac_hash(data, signature,secret):
+#    GitHub_secret = bytes(overall_parser["github"]["secret"], 'UTF-8')
+#    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
+#    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
     
 
 @app.route('/',methods=['GET','POST'])
@@ -380,7 +380,7 @@ def index(reposlug=False, sdeleni=False):
     if not "200" in str(r.status_code): #200
         success = False
         overall_parser = "Auth configuration not usable!"
-#
+
     username = r.json()['login']
     labels = find_labels(overall_parser)
     labels_rules = ""
@@ -389,13 +389,11 @@ def index(reposlug=False, sdeleni=False):
          labels_rules = "".join([labels_rules, labels_rule])
          
     if request.method == 'POST':
-        signature = request.headers.get('X-Hub-Signature')
+        #signature = request.headers.get('X-Hub-Signature')
         #data = json.loads(request.data)
-        data = request.data.decode('utf-8')
-        data = json.loads(data)        
-        secret = overall_parser["github"]["secret"]
-        if verify_hmac_hash(data, signature, secret):
-        #if True==True:
+        #secret = overall_parser["github"]["secret"]
+        #if verify_hmac_hash(data, signature,secret):
+        if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
                 #with open("file_ping.txt","w") as f:
                 #    f.write(str(request.data))
