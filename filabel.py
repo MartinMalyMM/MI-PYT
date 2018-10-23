@@ -390,7 +390,9 @@ def index(reposlug=False, sdeleni=False):
          
     if request.method == 'POST':
         signature = request.headers.get('X-Hub-Signature')
-        data = json.loads(request.data)
+        #data = json.loads(request.data)
+        data = request.data.decode('utf-8')
+        data = json.loads(data)        
         secret = overall_parser["github"]["secret"]
         if verify_hmac_hash(data, signature, secret):
         #if True==True:
