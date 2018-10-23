@@ -395,19 +395,12 @@ def index(reposlug=False, sdeleni=False):
         #if verify_hmac_hash(data, signature,secret):
         if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
-                #with open("file_ping.txt","w") as f:
-                #    f.write(str(request.data))
                 return jsonify({'msg': 'Ok'})
             if request.headers.get('X-GitHub-Event') == "pull_request":
                 #data = json.loads(request.data)
                 data = request.data.decode('utf-8')
                 data = json.loads(data)
                 reposlug = str(data['repository']['full_name'])
-                with open("file_pull.txt","w") as f:
-                    #f.write(data)    
-                    f.write(reposlug)
-                #reposlug = data['pull_request']['repository']['full_name']
-                #reposlug = "MartinMalyMM/MI-PYT"
                 
                 # Find PRs in repository
                 pulls = find_pulls(session, reposlug, base=False, state="open")
