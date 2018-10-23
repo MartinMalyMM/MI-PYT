@@ -401,12 +401,13 @@ def index(reposlug=False, sdeleni=False):
             if request.headers.get('X-GitHub-Event') == "pull_request":
                 #data = json.loads(request.data)
                 data = request.data.decode('utf-8')
-                rep = data.json()['repository']['name']
+                reposlug = data.json()['repository']['fullname']
                 with open("file_pull.txt","w") as f:
-                    f.write(data)    
-                    f.write(rep)
+                    #f.write(data)    
+                    f.write(reposlug)
                 #reposlug = data['pull_request']['repository']['fullname']
-                reposlug = "MartinMalyMM/MI-PYT"
+                #reposlug = "MartinMalyMM/MI-PYT"
+                
                 # Find PRs in repository
                 pulls = find_pulls(session, reposlug, base=False, state="open")
                 if pulls:
