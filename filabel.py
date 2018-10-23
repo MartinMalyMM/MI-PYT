@@ -402,11 +402,11 @@ def index(reposlug=False, sdeleni=False):
                 #data = json.loads(request.data)
                 data = request.data.decode('utf-8')
                 data = json.loads(data)
-                reposlug = str(data['repository']['fullname'])
+                reposlug = str(data['repository']['full_name'])
                 with open("file_pull.txt","w") as f:
                     #f.write(data)    
                     f.write(reposlug)
-                #reposlug = data['pull_request']['repository']['fullname']
+                #reposlug = data['pull_request']['repository']['full_name']
                 #reposlug = "MartinMalyMM/MI-PYT"
                 
                 # Find PRs in repository
