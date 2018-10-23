@@ -380,7 +380,7 @@ def index(reposlug=False, sdeleni=False):
     if not "200" in str(r.status_code): #200
         success = False
         overall_parser = "Auth configuration not usable!"
-
+#
     username = r.json()['login']
     labels = find_labels(overall_parser)
     labels_rules = ""
