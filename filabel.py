@@ -359,10 +359,10 @@ def find_repos_W(overall_parser):
             
 
 #Compare the HMAC hash signature
-#def verify_hmac_hash(data, signature,secret):
-#    GitHub_secret = bytes(overall_parser["github"]["secret"], 'UTF-8')
-#    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
-#    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
+def verify_hmac_hash(data, signature, secret):
+    GitHub_secret = bytes(secret, 'UTF-8')
+    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
+    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
     
 
 @app.route('/',methods=['GET','POST'])
@@ -389,11 +389,11 @@ def index(reposlug=False, sdeleni=False):
          labels_rules = "".join([labels_rules, labels_rule])
          
     if request.method == 'POST':
-        #signature = request.headers.get('X-Hub-Signature')
-        #data = json.loads(request.data)
-        #secret = overall_parser["github"]["secret"]
-        #if verify_hmac_hash(data, signature,secret):
-        if True==True:
+        signature = request.headers.get('X-Hub-Signature')
+        data = json.loads(request.data)
+        secret = overall_parser["github"]["secret"]
+        if verify_hmac_hash(data, signature, secret):
+        #if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
                 #with open("file_ping.txt","w") as f:
                 #    f.write(str(request.data))
