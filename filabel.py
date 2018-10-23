@@ -416,6 +416,7 @@ def index(reposlug=False, sdeleni=False):
                         # it but I did not manage repair bugs...
                         #
                         
+                        delete_old = True
                         # Find files of particular PR
                         pull_files = find_pull_files(session, reposlug, pull)
                         
