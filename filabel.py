@@ -401,8 +401,8 @@ def index(reposlug=False, sdeleni=False):
             if request.headers.get('X-GitHub-Event') == "pull_request":
                 #data = json.loads(request.data)
                 data = request.data
-                #with open("file_pull.txt","w") as f:
-                #    f.write(data)       
+                with open("file_pull.txt","w") as f:
+                    f.write(data)       
                 #reposlug = data['pull_request']['repository']['fullname']
                 reposlug = "MartinMalyMM/MI-PYT"
                 # Find PRs in repository
