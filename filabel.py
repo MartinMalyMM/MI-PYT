@@ -403,7 +403,8 @@ def index(reposlug=False, sdeleni=False):
                 data = request.data
                 #with open("file_pull.txt","w") as f:
                 #    f.write(data)       
-                reposlug = data['pull_request']['repository']['fullname']
+                #reposlug = data['pull_request']['repository']['fullname']
+                reposlug = "MartinMalyMM/MI-PYT"
                 # Find PRs in repository
                 pulls = find_pulls(session, reposlug, base=False, state="open")
                 if pulls:
