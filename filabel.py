@@ -389,9 +389,8 @@ def index(reposlug=False, sdeleni=False):
          
     if request.method == 'POST':
         signature = request.headers.get('X-Hub-Signature')
-        data = json.loads(request.data)
         secret = overall_parser["github"]["secret"]
-        if verify_hmac_hash(data, signature,secret):
+        if verify_hmac_hash(request.data, signature, secret):
         #if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
                 return jsonify({'msg': 'Ok'})
