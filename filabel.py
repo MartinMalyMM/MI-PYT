@@ -3,15 +3,14 @@ import configparser
 import requests
 import fnmatch
 import sys
-from flask import Flask, request, jsonify, abort
-app = Flask(__name__)
 from flask import render_template
 import jinja2
 import os
 import hmac
 import hashlib
 import json
-#
+from flask import Flask, request, jsonify, abort
+app = Flask(__name__)
 
 #Usage: filabel.py [OPTIONS] [REPOSLUGS]...
 #
@@ -27,6 +26,8 @@ import json
 #  -a, --config-auth FILENAME      File with authorization configuration.
 #  -l, --config-labels FILENAME    File with labels configuration.
 #  --help                          Show this message and exit.
+
+# Přepínače --config-auth a --config-labels můžete nastavit jako povinné. 
   
 @click.command()
 @click.option('-s', '--state', type=click.Choice(['open', 'closed', 'all']),             
@@ -44,11 +45,6 @@ import json
               type=click.File('r'),
               help='File with labels configuration.')                  
 @click.argument('reposlugs', nargs=-1)
-# Přepínače --config-auth a --config-labels můžete nastavit jako povinné. 
-
-
-
-
 def main(state, delete_old, base, config_auth, config_labels, reposlugs):
     """CLI tool for filename-pattern-based labeling of GitHub PRs"""
 
@@ -360,10 +356,12 @@ def find_repos_W(overall_parser):
             
 
 #Compare the HMAC hash signature
-#def verify_hmac_hash(data, signature,secret):
+def verify_hmac_hash(data, signature, secret, encoding='utf-8'):
 #    GitHub_secret = bytes(overall_parser["github"]["secret"], 'UTF-8')
 #    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
-#    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)            
+#    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)         
+    h = hmac.new(secret.encode(encoding), data, hashlib.sha1)
+    return hmac.compare_digest('sha1=' + h.hexdigest(), signature)          
     
 
 @app.route('/',methods=['GET','POST'])
@@ -390,11 +388,11 @@ def index(reposlug=False, sdeleni=False):
          labels_rules = "".join([labels_rules, labels_rule])
          
     if request.method == 'POST':
-        #signature = request.headers.get('X-Hub-Signature')
-        #data = json.loads(request.data)
-        #secret = overall_parser["github"]["secret"]
-        #if verify_hmac_hash(data, signature,secret):
-        if True==True:
+        signature = request.headers.get('X-Hub-Signature')
+        data = json.loads(request.data)
+        secret = overall_parser["github"]["secret"]
+        if verify_hmac_hash(data, signature,secret):
+        #if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
                 return jsonify({'msg': 'Ok'})
             if request.headers.get('X-GitHub-Event') == "pull_request":
