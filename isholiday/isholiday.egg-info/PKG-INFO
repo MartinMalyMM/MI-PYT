@@ -1,0 +1,21 @@
+Metadata-Version: 1.1
+Name: isholiday
+Version: 0.1
+Summary: Finds Czech holiday for given year
+Home-page: https://gist.github.com/oskar456/e91ef3ff77476b0dbc4ac19875d0555e
+Author: Ondřej Caletka
+Author-email: ondrej@caletka.cz
+License: Public Domain
+Description: ...
+        
+        
+Platform: UNKNOWN
+Classifier: Intended Audience :: Developers
+Classifier: License :: Public Domain
+Classifier: Operating System :: POSIX :: Linux
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: Implementation :: CPython
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.6
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Topic :: Software Development :: Libraries

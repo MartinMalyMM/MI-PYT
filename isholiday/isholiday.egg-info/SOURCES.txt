@@ -1,0 +1,14 @@
+LICENSE
+MANIFEST.in
+README
+setup.py
+isholiday/__init__.py
+isholiday/__main__.py
+isholiday/isholidays.py
+isholiday.egg-info/PKG-INFO
+isholiday.egg-info/SOURCES.txt
+isholiday.egg-info/dependency_links.txt
+isholiday.egg-info/entry_points.txt
+isholiday.egg-info/not-zip-safe
+isholiday.egg-info/requires.txt
+isholiday.egg-info/top_level.txt

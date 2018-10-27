@@ -1,0 +1,3 @@
+[console_scripts]
+isholiday_demo = isholiday.isholidays:main
+
