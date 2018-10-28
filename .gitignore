@@ -4,3 +4,7 @@ auth.cfg
 credentials.cfg
 playground.py
 test_environment
+exports.sh
+trash
+test*
+pythondevsurvey2017_raw_data.csv
