@@ -6,7 +6,7 @@ with open('README') as f:
 
 setup(
     name='filabel_malymar9',
-    version='0.3.0.1',
+    version='0.3.0.3',
     description='Tool for managing of labels of GitHub pull requests',
     long_description=long_description,
     author='Martin Malý',
@@ -18,6 +18,8 @@ setup(
         'Intended Audience :: Developers',
         'Intended Audience :: Information Technology',
         'Framework :: Flask',
+        'Environment :: Console',
+        'Environment :: Web Environment',
         'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
         'Natural Language :: English',
         'Operating System :: POSIX :: Linux',
