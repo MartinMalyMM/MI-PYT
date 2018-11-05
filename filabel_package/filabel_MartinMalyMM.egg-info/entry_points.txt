@@ -1,0 +1,3 @@
+[console_scripts]
+filabel = filabel.cli_app:main
+

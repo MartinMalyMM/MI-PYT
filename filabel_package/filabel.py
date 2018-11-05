@@ -1,3 +1,4 @@
+from commons import *
 import click
 import configparser
 import requests
@@ -361,7 +362,7 @@ def verify_hmac_hash(data, signature, secret, encoding='utf-8'):
 #    mac = hmac.new(GitHub_secret, msg=data, digestmod=hashlib.sha1)
 #    return hmac.compare_digest('sha1=' + mac.hexdigest(), signature)         
     h = hmac.new(secret.encode(encoding), data, hashlib.sha1)
-    return hmac.compare_digest('sha1=' + h.hexdigest(), signature)   
+    return hmac.compare_digest('sha1=' + h.hexdigest(), signature)          
     
 
 @app.route('/',methods=['GET','POST'])
@@ -389,9 +390,8 @@ def index(reposlug=False, sdeleni=False):
          
     if request.method == 'POST':
         signature = request.headers.get('X-Hub-Signature')
-        data = json.loads(request.data)
         secret = overall_parser["github"]["secret"]
-        if verify_hmac_hash(data, signature,secret):
+        if verify_hmac_hash(request.data, signature, secret):
         #if True==True:
             if request.headers.get('X-GitHub-Event') == "ping":
                 return jsonify({'msg': 'Ok'})
