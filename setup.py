@@ -6,12 +6,12 @@ with open('README') as f:
 
 setup(
     name='filabel_malymar9',
-    version='0.3.0.4',
+    version='0.3.0.5',
     description='Tool for managing of labels of GitHub pull requests',
     long_description=long_description,
     author='Martin Malý',
     author_email='malymar9@fjfi.cvut.cz',
-    keywords='git,github,flask',
+    keywords='git,github,flask,filabel',
     license='CC0 1.0 Universal',
     url='https://github.com/MartinMalyMM/MI-PYT',
     packages=find_packages(),
