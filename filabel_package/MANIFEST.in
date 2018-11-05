@@ -1,5 +1,0 @@
-include LICENSE
-include filabel/credentials.cfg
-include filabel/labels.cfg
-include filabel/templates/filabel.html
-include filabel/static/filabel.css
