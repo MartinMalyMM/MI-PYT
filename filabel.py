@@ -1,3 +1,4 @@
+from commons import *
 import click
 import configparser
 import requests

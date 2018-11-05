@@ -1,0 +1,21 @@
+This program is utility that can help you with organising labels in your GitHub repository. Moreover, web application is also included to process GitHub webhooks - your labels will be always up-to-date!
+
+Configure the application using CFG files - an example:
+
+ - file credentials.cfg
+[github]
+token = <your token>
+secret = <your webhook secret>
+
+ - file labels.cfg
+[labels]
+frontend=
+    */templates/*
+    static/*
+backend=logic/*
+docs=
+    *.md
+    *.rst
+    *.adoc
+    LICENSE
+    docs/*
