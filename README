@@ -33,12 +33,11 @@ GitHub API, které používají modul betamax. Netestuje se tedy přímo
 proti "živému" API.
 
 Odpovědi GitHub API lze znovu nahrát. Testy však vyžadují určitý setup repozitářů. 
-Pro jeho vytvoření použijte skript
-`tests/setup.sh`. Je třeba nastavit proměnné prostředí
-`GH_TOKEN` a `GH_USER`.
+Pro jeho vytvoření použijte skript`tests/setup.sh`. Je třeba nastavit 
+proměnné prostředí `GH_TOKEN` a `GH_USER`.
 Token musí příslušet danému uživateli a mít scope `repo`.
-Skript využívá program https://hub.github.com/[hub],
-který si *nejprve zprovozněte*.
+Skript využívá program hub (https://hub.github.com/)
+který si nejprve zprovozněte.
 
 [source,console]
 $ export GH_USER=anicka
