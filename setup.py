@@ -6,7 +6,7 @@ with open('README') as f:
 
 setup(
     name='filabel_malymar9',
-    version='0.3.0.5',
+    version='0.4.0.0',
     description='Tool for managing of labels of GitHub pull requests',
     long_description=long_description,
     author='Martin Malý',
@@ -38,5 +38,7 @@ setup(
         ]
     },
     install_requires=['Flask', 'click', 'requests'],
-    package_data={'filabel': ['templates/*.html', 'static/*.css']}, 
+    package_data={'filabel': ['templates/*.html', 'static/*.css']},
+    setup_requires=['pytest-runner'],
+    tests_require=['pytest', 'betamax'],    
 )

@@ -3,3 +3,6 @@ include filabel/credentials.cfg
 include filabel/labels.cfg
 include filabel/templates/filabel.html
 include filabel/static/filabel.css
+include tests/*
+include tests/fixtures/*
+include tests/fixtures/cassettes/*
