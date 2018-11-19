@@ -1,4 +1,3 @@
-# betamax.configure
 import pytest
 import betamax
 import os
@@ -30,7 +29,7 @@ with betamax.Betamax.configure() as config:
         TOKEN = os.environ['GH_TOKEN']
         # Always re-record the cassetes
         # https://betamax.readthedocs.io/en/latest/record_modes.html
-        #config.default_cassette_options['record_mode'] = 'all'
+        config.default_cassette_options['record_mode'] = 'all'
     else:
         TOKEN = 'false_token'
         # Do not attempt to record sessions with bad fake token
@@ -49,7 +48,8 @@ class Client:
         
     def _create_session(self, token, session):
         session = session or requests.Session()
-        session.headers = {'User-Agent': 'Python'}   
+        session.headers = {'User-Agent': 'Python'}
+        session.headers.update({'Accept-Encoding': 'identity'}) #new#
         def token_auth(req):
             req.headers['Authorization'] = f'token {token}'
             return req
