@@ -79,11 +79,14 @@ def config(name):
     return pathlib.Path(__file__).parent / 'fixtures' / name
 
 def pick_username(): # Dost prasárna...
-    with open(pathlib.Path(__file__).parent / 'fixtures' / 'cassettes' / 'test_github_clean.test_client.json', 'r') as c:
-        cassette = json.load(c)
-    dic = str(cassette["http_interactions"][0]["response"])
-    dic_ = dic.split('\"')
-    username = dic_[3]
+    try:
+        with open(pathlib.Path(__file__).parent / 'fixtures' / 'cassettes' / 'test_github_clean.test_client.json', 'r') as c:
+            cassette = json.load(c)
+        dic = str(cassette["http_interactions"][0]["response"])
+        dic_ = dic.split('\"')
+        username = dic_[3]
+    except FileNotFoundError:
+        username = os.environ['GH_USER']
     return username
     
 def test_username():
