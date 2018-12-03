@@ -6,7 +6,7 @@ with open('README.rst') as f:
 
 setup(
     name='filabel_malymar9',
-    version='0.5.0.0',
+    version='0.5.0.1',
     description='Tool for managing of labels of GitHub pull requests',
     long_description=long_description,
     author='Martin Malý',
