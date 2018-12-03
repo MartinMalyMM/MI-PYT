@@ -2,7 +2,13 @@ include LICENSE
 include filabel/credentials.cfg
 include filabel/labels.cfg
 include filabel/templates/filabel.html
-include filabel/static/filabel.css
+include filabel/static/*
 include tests/*
 include tests/fixtures/*
 include tests/fixtures/cassettes/*
+include docs/*.rst
+include docs/Makefile
+include docs/make.bat
+include docs/*.py
+include docs/_static/*
+include docs/_static/cassettes/*
