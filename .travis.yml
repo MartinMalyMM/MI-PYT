@@ -5,5 +5,7 @@ dist: xenial
 sudo: required
 install:
 - python setup.py install
+- pip install -r docs/requirements.txt
 script:
-- python setup.py test
+- python setup.py test --addopts -v
+- cd docs && make doctest

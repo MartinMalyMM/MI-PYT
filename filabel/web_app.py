@@ -5,6 +5,7 @@ from flask import Flask, request, jsonify, abort, render_template
 from .commons import *
 
 def create_app(var):
+    """Creates and runs a Flask application."""
     app = Flask(__name__)
 
     @app.route('/',methods=['GET','POST'])
@@ -113,6 +114,8 @@ def create_app(var):
     
     
     def config_W():
+        """vrvffvefv
+        """
         try:
             config_const = os.environ["FILABEL_CONFIG"]
         except KeyError:
@@ -162,7 +165,7 @@ def create_app(var):
     #Compare the HMAC hash signature
     def verify_hmac_hash(data, signature, secret, encoding='utf-8'):        
         h = hmac.new(secret.encode(encoding), data, hashlib.sha1)
-        return hmac.compare_digest('sha1=' + h.hexdigest(), signature) 
+        return hmac.compare_digest('sha1=' + h.hexdigest(), signature)
     
     return app
 

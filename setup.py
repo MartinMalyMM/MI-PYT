@@ -1,18 +1,18 @@
 from setuptools import setup, find_packages
 
-with open('README') as f:
+with open('README.rst') as f:
     long_description = ''.join(f.readlines())
 
 
 setup(
     name='filabel_malymar9',
-    version='0.4.0.0',
+    version='0.5.0.0',
     description='Tool for managing of labels of GitHub pull requests',
     long_description=long_description,
     author='Martin Malý',
     author_email='malymar9@fjfi.cvut.cz',
     keywords='git,github,flask,filabel',
-    license='CC0 1.0 Universal',
+    license='MIT License',
     url='https://github.com/MartinMalyMM/MI-PYT',
     packages=find_packages(),
     classifiers=[
@@ -21,7 +21,7 @@ setup(
         'Framework :: Flask',
         'Environment :: Console',
         'Environment :: Web Environment',
-        'License :: CC0 1.0 Universal (CC0 1.0) Public Domain Dedication',
+        'License :: OSI Approved :: MIT License',
         'Natural Language :: English',
         'Operating System :: POSIX :: Linux',
         'Programming Language :: Python',

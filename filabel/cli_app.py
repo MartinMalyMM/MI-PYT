@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
+
+"""
+.. autofunction:: filabel.main(state, delete_old, base, config_auth, config_labels, reposlugs)
+"""
+
 import click
 import configparser
 from .commons import *
 
-  
 @click.command()
 @click.option('-s', '--state', type=click.Choice(['open', 'closed', 'all']),             
               default='open',
@@ -21,7 +25,24 @@ from .commons import *
               help='File with labels configuration.')                  
 @click.argument('reposlugs', nargs=-1)
 def main(state, delete_old, base, config_auth, config_labels, reposlugs):
-    """CLI tool for filename-pattern-based labeling of GitHub PRs"""
+    """Main function of the 
+    CLI tool for filename-pattern-based labeling of GitHub pull requests.
+    Arguments of this function are usually set by Click module.
+    
+    `state`: string - ['open', 'closed', 'all']
+    
+    `delete_old`: bool
+
+    `base`: string
+    
+    `config_auth`: string
+    
+    `config_labels`: string
+    
+    `reposlugs`: list of strings
+    
+    Returns: nothing
+     """
 
     # Check if authorization configuration is supplied
     config_parser = configparser.ConfigParser()

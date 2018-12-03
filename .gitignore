@@ -9,3 +9,4 @@ pythondevsurvey2017_raw_data.csv
 dist*
 build*
 *egg-info
+/docs/_build/

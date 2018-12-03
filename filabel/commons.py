@@ -7,6 +7,11 @@ import click
 import configparser
 
 def find_labels(labels_parser):
+    """Puts the setting of labels in `labels_parser` into list `labels`.
+    
+    `labels_parser`: object of configparser module
+    
+    Returns: list (specific)"""
     labels_parser.sections()    
     labels = []
     print_debug("Labels:")
@@ -27,6 +32,24 @@ def find_labels(labels_parser):
 
 
 def find_pulls(session, reposlug, base, state, repo=False, ok=False, fail=False):
+    """Finds numbers of pull requests in given repository (specified by 
+    `reposlug`), taking into account
+    a project branch and a pull request state. 
+    If text-formating elements `repo`, `ok`, `fail` are
+    specified, prints results to STDOUT.
+    
+    `session`: request.session object
+    
+    `reposlug`: string
+    
+    `base`: string
+    
+    `state`: string - ['open', 'closed', 'all']
+    
+    `repo`, `ok`, `fail`: click.style object or string
+    
+    Returns: list of integers
+    """
     print_debug("")
     params_get=[["per_page","100"]]
     if base:
@@ -69,6 +92,17 @@ def find_pulls(session, reposlug, base, state, repo=False, ok=False, fail=False)
 
 
 def find_pull_files(session, reposlug, pull):
+    """Finds paths of files that are modified by a pull request with
+    number `pull` in given repository specified by `reposlug`.
+    
+    `session`: request.session object
+    
+    `reposlug`: string
+    
+    `pull`: int
+    
+    Returns: list of string
+    """
     pull_error = False
     print_debug("")
     r = session.get('https://api.github.com/repos/' + reposlug + '/pulls/' + str(pull) + '/files', params=[["per_page","100"]])
@@ -92,6 +126,21 @@ def find_pull_files(session, reposlug, pull):
 
 
 def find_pull_labels(session, reposlug, pull, labels):
+    """Finds current labels setting of a particular pull request with 
+    number `pull` in repository specified by `reposlug`. Only labels
+    specified in `labels` are taken into account.
+    
+    `session`: request.session object
+    
+    `reposlug`: string
+    
+    `pull`: int
+    
+    `labels`: list of lists
+    
+    Returns: list of strings
+    
+    """
     r = session.get('https://api.github.com/repos/' + reposlug + '/issues/' + str(pull) + '/labels')
     pull_labels_i_raw = []
     for j in range(len(r.json())):
@@ -113,6 +162,13 @@ def find_pull_labels(session, reposlug, pull, labels):
     return pull_labels_i
 
 def print_debug(text):
+    """
+    Prints debugging messages.
+    
+    `text`: string
+    
+    Returns: nothing
+    """
     #print(text)
     pass
     return  
