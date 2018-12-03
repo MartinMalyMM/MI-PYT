@@ -1,5 +1,2 @@
 sphinx
-sphinx.ext.autodoc
-sphinx.ext.doctest
-sphinx.ext.intersphinx
 betamax
